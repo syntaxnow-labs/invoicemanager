@@ -2,22 +2,22 @@
 import { Invoice, Client, BusinessProfile, RecurringTemplate, ProductItem, InventoryTransaction } from '../types';
 
 const KEYS = {
-  INVOICES: 'omni_invoices',
-  CLIENTS: 'omni_clients',
-  PREFS: 'omni_prefs',
-  BUSINESS: 'omni_business',
-  RECURRING: 'omni_recurring',
-  ITEMS: 'omni_items',
-  STOCK_LEDGER: 'omni_stock_ledger'
+  INVOICES: 'Syntaxnow_invoices',
+  CLIENTS: 'Syntaxnow_clients',
+  PREFS: 'Syntaxnow_prefs',
+  BUSINESS: 'Syntaxnow_business',
+  RECURRING: 'Syntaxnow_recurring',
+  ITEMS: 'Syntaxnow_items',
+  STOCK_LEDGER: 'Syntaxnow_stock_ledger'
 };
 
 const DEFAULT_BUSINESS: BusinessProfile = {
-  name: 'OmniInvoice Pro',
-  email: 'contact@omniinvoice.com',
+  name: 'SyntaxnowInvoice Pro',
+  email: 'contact@Syntaxnowinvoice.com',
   phone: '+1 (555) 000-0000',
   address: '123 Enterprise Way, Silicon Valley\nCA 94043, United States',
   gstNumber: 'GSTIN123456789',
-  website: 'www.omniinvoice.com',
+  website: 'www.Syntaxnowinvoice.com',
   bankDetails: 'Bank: Silicon Valley Bank\nAccount: 0000 1111 2222\nIFSC/SWIFT: SVB000123',
   invoicePrefix: 'INV-',
   quotationPrefix: 'QT-',

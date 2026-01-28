@@ -32,18 +32,13 @@ const getDbConfig = () => ({
 });
 
 // Replace Pool creation with a config that disables SSL by default (enable via DB_SSL=true)
-const poolConfig = process.env.DATABASE_URL
-  ? {
-      connectionString: process.env.DATABASE_URL,
-      ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
-    }
-  : {
-      host: process.env.DB_HOST || 'localhost',
-      port: Number(process.env.DB_PORT || 5432),
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
+const poolConfig =  {
+      host: '129.159.20.17',
+      port: Number(5432),
+      user: 'inv_manager_user',
+      password: 'password1',
+      database: 'invoicemanager',
+      ssl: false
     };
 
 const pool = new Pool(poolConfig);
@@ -53,6 +48,7 @@ const initDb = async () => {
   try {
     try {
       client = await pool.connect();
+
     } catch (err) {
       if (err.message.includes('SSL') || err.message.includes('protocol')) {
         pool = new Pool({ ...dbConfig, ssl: false });
@@ -535,7 +531,7 @@ const waitForPostgres = async (pool, { retries = 10, delay = 2000 } = {}) => {
     // ensure `pool` is the pg Pool instance defined earlier in this file
     await waitForPostgres(pool, { retries: 12, delay: 3000 });
 
-    const PORT = process.env.PORT || 3000;
+    const PORT = 8080;
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Production Server active at http://0.0.0.0:${PORT}`);
     });

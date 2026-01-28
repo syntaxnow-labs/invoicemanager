@@ -19,12 +19,12 @@ const TallyIntegration: React.FC<TallyIntegrationProps> = ({ invoices, expenses,
   });
 
   useEffect(() => {
-    const saved = localStorage.getItem('omni_tally_mappings');
+    const saved = localStorage.getItem('Syntaxnow_tally_mappings');
     if (saved) setMappings(JSON.parse(saved));
   }, []);
 
   const handleSaveMappings = () => {
-    localStorage.setItem('omni_tally_mappings', JSON.stringify(mappings));
+    localStorage.setItem('Syntaxnow_tally_mappings', JSON.stringify(mappings));
     alert('Tally Ledger mappings saved successfully!');
   };
 
