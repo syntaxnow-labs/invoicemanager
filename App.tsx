@@ -107,7 +107,7 @@ const App: React.FC = () => {
 
   const effectiveProfile = useMemo(() => {
     return (businessProfile || { 
-      name: 'Syntaxnow Invoiceing Business', 
+      name: 'Syntaxnow Invoicing Business', 
       currency: 'USD', 
       autoDeductInventory: true
     }) as BusinessProfile;
@@ -149,7 +149,7 @@ const App: React.FC = () => {
       <aside className="w-full md:w-64 bg-white border-r border-slate-200 p-6 flex flex-col sticky top-0 h-screen z-40 no-print">
         <div className="flex items-center gap-3 mb-10 px-2">
           <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg">O</div>
-          <span className="font-bold text-xl tracking-tight text-slate-800">Syntaxnow Invoiceing</span>
+          <span className="font-bold text-xl tracking-tight text-slate-800">Syntaxnow Invoicing</span>
         </div>
         <nav className="flex-1 space-y-1 overflow-y-auto">
           {NavItems.map((tab) => (

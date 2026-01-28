@@ -233,7 +233,7 @@ const initDb = async () => {
 
     const bCheck = await client.query('SELECT id FROM businesses LIMIT 1');
     if (bCheck.rows.length === 0) {
-      await client.query(`INSERT INTO businesses (name, email, phone, address, gst_number, currency, invoice_prefix, quotation_prefix, credit_note_prefix, auto_deduct_inventory) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`, ['Syntaxnow Invoiceing Business', 'office@Syntaxnow Invoiceing.com', '+1 555 0123', '123 Enterprise Blvd', 'GST-PENDING', 'USD', 'INV-', 'QT-', 'CN-', true]);
+      await client.query(`INSERT INTO businesses (name, email, phone, address, gst_number, currency, invoice_prefix, quotation_prefix, credit_note_prefix, auto_deduct_inventory) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`, ['Syntaxnow Invoicing Business', 'office@Syntaxnow Invoicing.com', '+1 555 0123', '123 Enterprise Blvd', 'GST-PENDING', 'USD', 'INV-', 'QT-', 'CN-', true]);
     }
 
     await client.query('COMMIT');

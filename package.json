@@ -1,5 +1,5 @@
 {
-  "name": "Syntaxnow Invoiceing-invoice-manager",
+  "name": "Syntaxnow Invoicing-invoice-manager",
   "version": "1.0.0",
   "description": "Enterprise-grade Invoice and Inventory Manager with Gemini AI Advisor",
   "main": "server.js",

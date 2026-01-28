@@ -30,7 +30,7 @@ const TallyIntegration: React.FC<TallyIntegrationProps> = ({ invoices, expenses,
 
   const handleExport = () => {
     const xml = TallyExportService.generateVoucherXML(invoices, expenses, clients, business, mappings);
-    TallyExportService.downloadXML(xml, `Syntaxnow Invoiceing_Tally_Export_${new Date().toISOString().split('T')[0]}.xml`);
+    TallyExportService.downloadXML(xml, `Syntaxnow Invoicing_Tally_Export_${new Date().toISOString().split('T')[0]}.xml`);
   };
 
   return (
@@ -54,7 +54,7 @@ const TallyIntegration: React.FC<TallyIntegrationProps> = ({ invoices, expenses,
             <span className="w-8 h-8 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center text-sm">🛠️</span>
             Ledger Mapping
           </h3>
-          <p className="text-xs text-slate-400 font-medium">Map Syntaxnow Invoiceing categories to your existing Tally Ledgers to prevent duplicate entries.</p>
+          <p className="text-xs text-slate-400 font-medium">Map Syntaxnow Invoicing categories to your existing Tally Ledgers to prevent duplicate entries.</p>
           
           <div className="space-y-4">
             {[
