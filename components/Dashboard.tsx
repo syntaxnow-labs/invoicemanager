@@ -7,7 +7,7 @@ import {
 import { Invoice, InvoiceStatus, DocumentType, ExpenseRecord } from '../types';
 import { CurrencyService } from '../services/exchangeRates';
 // Added BarChart3 to imports
-import { CircleDollarSign, TrendingDown, PieChart, Calendar, BarChart3 } from 'lucide-react';
+import { CircleDollarSign, IndianRupee, TrendingDown, PieChart, Calendar, BarChart3 } from 'lucide-react';
 
 interface DashboardProps {
   invoices: Invoice[];
@@ -92,9 +92,8 @@ const Dashboard: React.FC<DashboardProps> = ({ invoices, expenses = [], displayC
   }, [invoices, expenses, currencyLabel]);
 
   const statCards = [
-    { label: 'Settled Revenue', value: stats.revenue, color: 'text-emerald-600', bg: 'bg-emerald-50', icon: CircleDollarSign },
-    { label: 'Total Expenses', value: stats.expenses, color: 'text-rose-500', bg: 'bg-rose-50', icon: TrendingDown },
-    { label: 'Operating Profit', value: stats.netProfit, color: stats.netProfit >= 0 ? 'text-indigo-600' : 'text-rose-600', bg: 'bg-indigo-50', icon: PieChart }
+    { label: 'Settled Revenue', value: stats.revenue, color: 'text-emerald-600', bg: 'bg-emerald-50', icon: IndianRupee  },
+    { label: 'Total Expenses', value: stats.expenses, color: 'text-rose-500', bg: 'bg-rose-50', icon: TrendingDown }
   ];
 
   return (

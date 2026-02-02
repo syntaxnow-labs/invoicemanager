@@ -41,7 +41,7 @@ const InventoryDashboard: React.FC<InventoryDashboardProps> = ({ products, trans
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Inventory Value</p>
-          <p className="text-3xl font-black text-indigo-600 tracking-tighter">${stockValuation.toLocaleString()}</p>
+          <p className="text-3xl font-black text-indigo-600 tracking-tighter">₹{stockValuation.toLocaleString()}</p>
         </div>
         <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Total SKU Tracked</p>

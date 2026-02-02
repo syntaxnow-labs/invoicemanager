@@ -105,15 +105,28 @@ const App: React.FC = () => {
     setPreviewInvoice(null);
   };
 
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab); 
+    setShowInvoiceForm(false);
+    sessionStorage.setItem("activeTab", tab);
+  };
+
+  useEffect(() => {
+  const savedTab = sessionStorage.getItem("activeTab");
+  if (savedTab) {
+    setActiveTab(savedTab);
+  }
+  }, []);
+
   const effectiveProfile = useMemo(() => {
     return (businessProfile || { 
       name: 'Syntaxnow Invoicing Business', 
-      currency: 'USD', 
+      currency: 'INR', 
       autoDeductInventory: true
     }) as BusinessProfile;
   }, [businessProfile]);
 
-  const displayCurrency = String(effectiveProfile.currency || 'USD');
+  const displayCurrency = String(effectiveProfile.currency || 'INR');
 
   const filteredDocs = useMemo(() => {
     let source: Invoice[] = [];
@@ -155,8 +168,8 @@ const App: React.FC = () => {
           {NavItems.map((tab) => (
             <button 
               key={tab.id}
-              onClick={() => { setActiveTab(tab.id); setShowInvoiceForm(false); }}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${activeTab === tab.id ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50'}`}
+              onClick={()=>handleTabClick(tab.id)}
+              className={`sidebar-button w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${activeTab === tab.id ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50'}`}
             >
               <tab.icon className="w-4 h-4" />
               {tab.label}
