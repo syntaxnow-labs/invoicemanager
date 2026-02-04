@@ -13,18 +13,10 @@ import {
   XCircle, Upload, Loader2
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
+import { useClientStore } from '../services/store';
+
 
 interface ClientManagerProps {
-  clients: Client[];
-  invoices: Invoice[];
-  quotations: Invoice[];
-  creditNotes: Invoice[];
-  onAddClient: (client: Partial<Client>) => Promise<void>;
-  onUpdateClient: (client: Client) => Promise<void>;
-  onDeleteClient: (clientId: string) => Promise<void>;
-  onViewDocument: (doc: Invoice) => void;
-  onEditDocument: (doc: Invoice) => void;
-  onCreateForClient: (clientId: string, type: DocumentType) => void;
 }
 
 const SyntaxnowInput = ({ label, required, icon: Icon, ...props }: any) => (
@@ -65,11 +57,18 @@ const SectionHeading = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-const ClientManager: React.FC<ClientManagerProps> = ({ 
-  clients, invoices, quotations, creditNotes,
-  onAddClient, onUpdateClient, onDeleteClient,
-  onViewDocument, onEditDocument, onCreateForClient
+const ClientManager: React.FC = ({
 }) => {
+  const clients = useClientStore((state: any) => state.clients);
+  const addClient = useClientStore((state:any) => state.addClient);
+  const updateClient = useClientStore((state:any) => state.updateClient);
+  const deleteClient = useClientStore((state:any) => state.deleteClient);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [quotations, setQuotations] = useState<Invoice[]>([]);
+  const [creditNotes, setCreditNotes] = useState<Invoice[]>([]);
+  const [previewInvoice, setPreviewInvoice] = useState<Invoice | null>(null);
+  const [showInvoiceForm, setShowInvoiceForm] = useState(false);
+  const [editingInvoice, setEditingInvoice] = useState<Invoice | null>(null);
   const [isAdding, setIsAdding] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
@@ -95,7 +94,7 @@ const ClientManager: React.FC<ClientManagerProps> = ({
     gstTreatment: 'Registered Business - Regular',
     pan: '',
     placeOfSupply: '',
-    currency: 'USD',
+    currency: 'INR',
     paymentTerms: 'Due on Receipt',
     billingStreet: '',
     billingCity: '',
@@ -146,7 +145,7 @@ const ClientManager: React.FC<ClientManagerProps> = ({
           if (newClient.name || (newClient.firstName && newClient.lastName)) {
             // Auto-compute name if missing
             if (!newClient.name) newClient.name = `${newClient.firstName} ${newClient.lastName}`.trim();
-            await onAddClient(newClient);
+            await addClient(newClient);
             successCount++;
           }
         }
@@ -229,9 +228,9 @@ const ClientManager: React.FC<ClientManagerProps> = ({
 
     try {
       if (editingClient) {
-        await onUpdateClient({ ...editingClient, ...payload } as Client);
+        await updateClient({ ...editingClient, ...payload } as Client);
       } else {
-        await onAddClient(payload);
+        await addClient(payload);
       }
       resetForm();
     } catch (err) {
@@ -289,6 +288,24 @@ const ClientManager: React.FC<ClientManagerProps> = ({
     c.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     c.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const onCreateForClient = (clientId: string, type: DocumentType) => {
+    setSelectedClientId(clientId);
+    setEditingInvoice(null);
+    setShowInvoiceForm(true);
+  };
+
+  const onViewDocument = (doc: Invoice) => {
+    setPreviewInvoice(doc);
+    setShowInvoiceForm(true);
+  };
+
+  const onEditDocument = (doc: Invoice) => {
+    setEditingInvoice(doc);
+    setShowInvoiceForm(true);
+      
+  };
+
 
   const renderDocTable = (docs: Invoice[], type: DocumentType) => (
     <div className="space-y-4">
@@ -747,7 +764,7 @@ const ClientManager: React.FC<ClientManagerProps> = ({
                       <Pencil className="w-3.5 h-3.5" />
                     </button>
                     <button 
-                      onClick={(e) => { e.stopPropagation(); if(confirm('Permanently delete customer?')) onDeleteClient(client.id); }}
+                      onClick={(e) => { e.stopPropagation(); if(confirm('Permanently delete customer?')) deleteClient(client.id); }}
                       className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
                       title="Delete"
                     >

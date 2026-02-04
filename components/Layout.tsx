@@ -152,7 +152,7 @@ const Layout = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-10 overflow-y-auto">
-        {/* <Outlet /> */}
+        <Outlet />
         {/* hello world */}
       </main>
 

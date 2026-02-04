@@ -1,22 +1,30 @@
 
-import React, { useState, useEffect } from 'react';
-import { ExpenseRecord, ExpenseCategory, PaymentMode } from '../types';
+import React, { useState, useEffect,useMemo } from 'react';
+import { ExpenseRecord, ExpenseCategory, PaymentMode, BusinessProfile } from '../types';
 import { DataTable } from './shared/DataTable';
-import { generateId } from '../utils/id';
 import { Pencil, Trash2, Eye } from 'lucide-react';
+import { useExpenseStore, useBusinessStore } from '../services/store';
 
-interface ExpenseManagerProps {
-  expenses: ExpenseRecord[];
-  onAddExpense: (expense: Partial<ExpenseRecord>) => Promise<void>;
-  onDeleteExpense: (id: string) => Promise<void>;
-  currency: string;
-}
 
-const ExpenseManager: React.FC<ExpenseManagerProps> = ({ expenses, onAddExpense, onDeleteExpense, currency }) => {
+const ExpenseManager: React.FC = ( ) => {
   const [isAdding, setIsAdding] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [receiptPreview, setReceiptPreview] = useState<string | null>(null);
   const [editingExpense, setEditingExpense] = useState<ExpenseRecord | null>(null);
+  const expenses :ExpenseRecord[] = useExpenseStore((state:any) => state.expenses);
+  const addExpenses = useExpenseStore((state:any) => state.addExpenses);
+  const deleteExpenses = useExpenseStore((state:any) => state.deleteExpenses);
+  const businessProfile = useBusinessStore((state:any) => state.businessProfile);
+
+   const effectiveProfile = useMemo(() => {
+      return (businessProfile || { 
+        name: 'Syntaxnow Invoicing Business', 
+        currency: 'USD', 
+        autoDeductInventory: true
+      }) as BusinessProfile;
+    }, [businessProfile]);
+  
+    const currency  = String(effectiveProfile.currency || 'USD');
   
   const [formData, setFormData] = useState<Partial<ExpenseRecord>>({
     date: new Date().toISOString().split('T')[0],
@@ -75,7 +83,7 @@ const ExpenseManager: React.FC<ExpenseManagerProps> = ({ expenses, onAddExpense,
         payload.id = editingExpense.id;
       }
 
-      await onAddExpense(payload);
+      await addExpenses(payload);
       resetForm();
     } catch (err) {
       alert("Failed to save expense: " + err);
@@ -228,7 +236,7 @@ const ExpenseManager: React.FC<ExpenseManagerProps> = ({ expenses, onAddExpense,
                   <Pencil className="w-3.5 h-3.5" />
                 </button>
                 <button 
-                  onClick={() => { if(confirm('Delete permanently?')) onDeleteExpense(e.id); }}
+                  onClick={() => { if(confirm('Delete permanently?')) deleteExpenses(e.id); }}
                   className="p-2 text-slate-300 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all inline-flex items-center gap-1.5 font-bold text-xs" 
                   title="Delete Record"
                 >
