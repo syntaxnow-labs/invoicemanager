@@ -177,7 +177,7 @@ const Settings: React.FC<SettingsProps> = ({ profile, onUpdate }) => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
-                  <InputLabel icon={Building2}>Trade Name</InputLabel>
+                  <InputLabel icon={Building2}>Trade Name1</InputLabel>
                   <input 
                     required
                     value={localProfile.name}
